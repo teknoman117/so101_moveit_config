@@ -1,0 +1,30 @@
+# Maps MoveIt's groups onto the controllers in so101_description/config/so101_controllers.yaml
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - arm_controller
+    - gripper_controller
+
+  arm_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - shoulder_pan
+      - shoulder_lift
+      - elbow_flex
+      - wrist_flex
+      - wrist_roll
+
+  gripper_controller:
+    type: ParallelGripperCommand
+    action_ns: gripper_cmd
+    default: true
+    joints:
+      - gripper
+
+trajectory_execution:
+  # The measured start of a trajectory may differ from the planned start by this much (rad).
+  # The default (0.01) is tighter than an arm that sags a little under gravity.
+  allowed_start_tolerance: 0.05

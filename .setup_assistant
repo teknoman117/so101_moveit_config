@@ -1,0 +1,16 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: so101_description
+    relative_path: urdf/so101.urdf.xacro
+  srdf:
+    relative_path: config/so101.srdf
+  package_settings:
+    author_name: Nathan Lewis
+    author_email: git@nrlewis.dev
+    generated_timestamp: 1791259200
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

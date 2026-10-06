@@ -1,0 +1,44 @@
+# IK for the SO-101 (pick_ik). The arm has 5 joints, so a 6-DOF pose goal is reachable only for
+# some orientations: for each gripper position, the approach direction must lie in the vertical
+# plane through the shoulder_pan axis.
+#
+# arm: full pose IK. Solves reachable poses to within 1 mm and about 0.1 deg, and fails on poses
+# whose orientation the arm cannot reach.
+arm:
+  kinematics_solver: pick_ik/PickIkPlugin
+  kinematics_solver_timeout: 0.05
+  mode: global                 # global search, then local refinement
+  position_scale: 1.0
+  rotation_scale: 0.5          # orientation weight relative to position
+  position_threshold: 0.001    # m
+  orientation_threshold: 0.05  # rad
+  cost_threshold: 0.001
+  minimal_displacement_weight: 0.0
+  gd_step_size: 0.0001
+
+# arm_position_only: the same joints, position-only IK (rotation_scale 0 ignores orientation).
+# For position goals and for dragging the marker in RViz.
+arm_position_only:
+  kinematics_solver: pick_ik/PickIkPlugin
+  kinematics_solver_timeout: 0.05
+  mode: global
+  position_scale: 1.0
+  rotation_scale: 0.0
+  position_threshold: 0.001    # m
+  cost_threshold: 0.001
+  minimal_displacement_weight: 0.0
+  gd_step_size: 0.0001
+
+# arm_teleop: the same joints, for the marker follower (lekiwi_teleop arm_marker). Position-only
+# and local: gradient descent from the seed (the current joint angles), so a small step changes the
+# joints a little and the orientation only as much as the position requires.
+arm_teleop:
+  kinematics_solver: pick_ik/PickIkPlugin
+  kinematics_solver_timeout: 0.02
+  mode: local
+  position_scale: 1.0
+  rotation_scale: 0.0
+  position_threshold: 0.001    # m
+  cost_threshold: 0.001
+  minimal_displacement_weight: 0.0
+  gd_step_size: 0.0001
