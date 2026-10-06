@@ -42,3 +42,19 @@ arm_teleop:
   cost_threshold: 0.001
   minimal_displacement_weight: 0.0
   gd_step_size: 0.0001
+
+# arm_teleop_pose: the same joints, for the claw and planar modes of the marker follower. Full
+# pose, local search from the current joints: those modes only request reachable orientations
+# (gripper pointing down; or shoulder_pan and wrist_roll at 0), so the pose is solved exactly,
+# without jumping to another branch.
+arm_teleop_pose:
+  kinematics_solver: pick_ik/PickIkPlugin
+  kinematics_solver_timeout: 0.02
+  mode: local
+  position_scale: 1.0
+  rotation_scale: 0.5
+  position_threshold: 0.001    # m
+  orientation_threshold: 0.01  # rad
+  cost_threshold: 0.001
+  minimal_displacement_weight: 0.0
+  gd_step_size: 0.0001
